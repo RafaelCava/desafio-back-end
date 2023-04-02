@@ -11,7 +11,6 @@ module.exports = {
   transform: {
     '.+\\.ts$': 'ts-jest'
   },
-  preset: '@shelf/jest-mongodb',
   moduleNameMapper: {
     '@/tests/(.*)': '<rootDir>/tests/$1',
     '@/(.*)': '<rootDir>/src/$1'
