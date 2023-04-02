@@ -7,3 +7,5 @@
 [] use verb get http
 
 [] the array must be in order of publication date
+
+> PATH: /articles
