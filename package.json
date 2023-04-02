@@ -1,0 +1,8 @@
+{
+  "name": "jurishand",
+  "version": "1.0.0",
+  "description": "desafio back-end",
+  "main": "dist/main/server.js",
+  "author": "Rafael Cavalcante",
+  "license": "MIT"
+}
