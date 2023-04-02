@@ -12,6 +12,8 @@ services:
     container_name: jurishand
     volumes:
       - .:/usr/jurishand/app
+    environment:
+      NODE_ENV: development
     tty: true
     restart: on-failure
     ports:
