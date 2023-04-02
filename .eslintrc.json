@@ -11,7 +11,8 @@
     "overrides": [
     ],
     "plugins": [
-        "prettier"
+        "prettier",
+        "jest"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
