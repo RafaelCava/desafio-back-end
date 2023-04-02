@@ -33,7 +33,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "NODE_ENV=test jest --passWithNoTests --runInBand",
-    "test:unit": "yarn test:verbose --watch -c jest-unit.config.js",
+    "test:unit": "yarn test:verbose --watch -c jest-unit.config.ts",
     "test:integration": "yarn test:verbose --watch -c jest-integration.config.js",
     "test:cov": "rimraf coverage && yarn test --coverage",
     "build:compile": "tsc -p tsconfig-build.json",
