@@ -39,4 +39,10 @@ describe('DbLoadArticles', () => {
     const articles = await sut.load()
     expect(articles).toEqual(mockArticles())
   })
+
+  it('should return a empty array if LoadArticlesRepository returns a empty array', async () => {
+    const { sut } = makeSut()
+    const articles = await sut.load()
+    expect(articles).toEqual(mockArticles())
+  })
 })
