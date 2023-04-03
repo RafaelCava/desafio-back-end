@@ -39,7 +39,7 @@ describe('LoadArticles Controller', () => {
     const { sut, loadArticlesSpy } = makeSut()
     jest.spyOn(loadArticlesSpy, 'load').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle()
-    expect(httpResponse).toEqual(serverError(new Error().stack))
+    expect(httpResponse).toEqual(serverError(new Error().stack as string))
   })
 
   it('Should return 200 and an array with Articles if then exists', async () => {

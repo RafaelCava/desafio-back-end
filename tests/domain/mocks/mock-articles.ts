@@ -1,6 +1,6 @@
 import { Article } from '@/domain/models'
 export const mockArticle = (): Article => ({
-  id: 'any_id',
+  id: 1,
   author: 'any_author',
   category: 'any_category',
   content: 'any_content',
@@ -10,7 +10,7 @@ export const mockArticle = (): Article => ({
 
 export const mockArticles = (): Article[] => [
   {
-    id: 'any_id',
+    id: 1,
     title: 'any_title',
     author: 'any_author',
     content: 'any_value',
@@ -18,7 +18,7 @@ export const mockArticles = (): Article[] => [
     category: 'any_category',
   },
   {
-    id: 'any_id_2',
+    id: 2,
     title: 'any_title_2',
     author: 'any_author_2',
     content: 'any_value_2',

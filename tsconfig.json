@@ -8,6 +8,7 @@
     "baseUrl": "src",
     "allowJs": true,
     "sourceMap": true,
+    "strictNullChecks": true,
     "paths": {
       "@/tests/*": ["../tests/*"],
       "@/*": ["*"]
