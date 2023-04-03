@@ -14,6 +14,7 @@ describe('ArticleMysqlRepository', () => {
 
   afterAll(async () => {
     await prisma.article.deleteMany()
+    await prisma.$disconnect()
   })
 
   afterEach(() => {
