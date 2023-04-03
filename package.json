@@ -41,7 +41,8 @@
     "test:cov": "rimraf coverage && yarn test --coverage",
     "build:compile": "tsc -p tsconfig-build.json",
     "build": "rimraf dist && yarn build:compile",
-    "test:staged": "yarn test"
+    "test:staged": "yarn test",
+    "env": "rm -rf .env && cp .env.example .env"
   },
   "config": {
     "commitizen": {
