@@ -14,10 +14,29 @@ services:
       - .:/usr/jurishand/app
     environment:
       NODE_ENV: development
+      DATABASE_URL: mysql://root:root@db:3306/jurishand
     tty: true
     restart: on-failure
     ports:
       - 3000:3000
+    networks:
+      - kong-fc
+    extra_hosts:
+      - host.docker.internal:host-gateway 
+    depends_on:
+      - db
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: jurishand-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: jurishand
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - 3306:3306
     networks:
       - kong-fc
     extra_hosts:
