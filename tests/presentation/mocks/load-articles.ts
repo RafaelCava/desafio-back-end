@@ -1,5 +1,5 @@
 import { LoadArticles } from '@/domain/usecase'
-import { mockArticles } from './mock-articles'
+import { mockArticles } from '../../domain/mocks/mock-articles'
 
 export class LoadArticlesSpy implements LoadArticles {
   async load(): Promise<LoadArticles.Result> {

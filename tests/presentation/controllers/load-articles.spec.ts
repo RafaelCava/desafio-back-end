@@ -1,8 +1,9 @@
 import { type LoadArticles } from '@/domain/usecase'
 import { LoadArticlesController } from '@/presentation/controllers'
 import { ok, serverError } from '@/presentation/helpers/http-helper'
-import { LoadArticlesSpy, mockArticles, throwError } from '@/tests/domain/mocks'
+import { mockArticles, throwError } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
+import { LoadArticlesSpy } from '../mocks/load-articles'
 
 type SutTypes = {
   sut: LoadArticlesController
@@ -45,5 +46,12 @@ describe('LoadArticles Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle()
     expect(httpResponse).toEqual(ok(mockArticles()))
+  })
+
+  it("Should return 200 with empty array if doesn't exists Articles", async () => {
+    const { sut, loadArticlesSpy } = makeSut()
+    jest.spyOn(loadArticlesSpy, 'load').mockReturnValueOnce(Promise.resolve([]))
+    const httpResponse = await sut.handle()
+    expect(httpResponse).toEqual(ok([]))
   })
 })
