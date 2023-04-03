@@ -1,8 +1,8 @@
 import { type LoadArticles } from '@/domain/usecase'
 import { LoadArticlesController } from '@/presentation/controllers'
-import { serverError } from '@/presentation/helpers/http-helper'
-import { StatusCode } from '@/presentation/protocols'
-import { LoadArticlesSpy, throwError } from '@/tests/domain/mocks'
+import { ok, serverError } from '@/presentation/helpers/http-helper'
+import { LoadArticlesSpy, mockArticles, throwError } from '@/tests/domain/mocks'
+import Mockdate from 'mockdate'
 
 type SutTypes = {
   sut: LoadArticlesController
@@ -19,6 +19,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadArticles Controller', () => {
+  beforeEach(() => {
+    Mockdate.set(new Date())
+  })
+
+  afterEach(() => {
+    Mockdate.reset()
+  })
+
   it('Should call LoadArticles once time', async () => {
     const { sut, loadArticlesSpy } = makeSut()
     const loadSpy = jest.spyOn(loadArticlesSpy, 'load')
@@ -31,5 +39,11 @@ describe('LoadArticles Controller', () => {
     jest.spyOn(loadArticlesSpy, 'load').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle()
     expect(httpResponse).toEqual(serverError(new Error().stack))
+  })
+
+  it('Should return 200 and an array with Articles if then exists', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle()
+    expect(httpResponse).toEqual(ok(mockArticles()))
   })
 })

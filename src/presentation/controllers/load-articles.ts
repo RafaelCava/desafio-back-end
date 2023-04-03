@@ -1,14 +1,13 @@
 import { LoadArticles } from '@/domain/usecase'
 import { type HttpResponse, type Controller } from '@/presentation/protocols'
-import { serverError } from '../helpers/http-helper'
-import { ServerError } from '../errors'
+import { ok, serverError } from '../helpers/http-helper'
 
 export class LoadArticlesController implements Controller {
   constructor(private readonly loadArticles: LoadArticles) {}
   async handle(): Promise<LoadArticlesController.Result> {
     try {
-      await this.loadArticles.load()
-      return null
+      const articles = await this.loadArticles.load()
+      return ok(articles)
     } catch (error) {
       return serverError(error)
     }
