@@ -1,7 +1,7 @@
 import { type LoadArticlesRepository } from '@/data/protocols'
 import { DbLoadArticles } from '@/data/usecases'
 import { LoadArticlesRepositorySpy } from '@/tests/data/mocks/load-articles-repository'
-import { mockArticles } from '@/tests/domain/mocks'
+import { mockArticles, throwError } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 
 type SutTypes = {
@@ -44,5 +44,14 @@ describe('DbLoadArticles', () => {
     const { sut } = makeSut()
     const articles = await sut.load()
     expect(articles).toEqual(mockArticles())
+  })
+
+  it('should throws if LoadArticlesRepository throws', async () => {
+    const { sut, loadArticlesRepositoryStub } = makeSut()
+    jest
+      .spyOn(loadArticlesRepositoryStub, 'load')
+      .mockImplementationOnce(throwError)
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow()
   })
 })
