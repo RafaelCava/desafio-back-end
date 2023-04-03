@@ -1,4 +1,4 @@
-import { LoadArticles } from '@/domain/usecase'
+import { LoadArticles } from '@/domain/usecases'
 import { type HttpResponse, type Controller } from '@/presentation/protocols'
 import { ok, serverError } from '../helpers/http-helper'
 

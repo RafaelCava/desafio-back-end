@@ -1,4 +1,4 @@
-import { type LoadArticles } from '@/domain/usecase'
+import { type LoadArticles } from '@/domain/usecases'
 import { LoadArticlesController } from '@/presentation/controllers'
 import { ok, serverError } from '@/presentation/helpers/http-helper'
 import { mockArticles, throwError } from '@/tests/domain/mocks'

@@ -1,4 +1,4 @@
-import { LoadArticles } from '@/domain/usecase'
+import { LoadArticles } from '@/domain/usecases'
 import { mockArticles } from '../../domain/mocks/mock-articles'
 
 export class LoadArticlesSpy implements LoadArticles {
