@@ -12,9 +12,11 @@ services:
     container_name: jurishand
     volumes:
       - .:/usr/jurishand/app
+    entrypoint: sh ./.docker/entrypoint.sh
     environment:
       NODE_ENV: development
       DATABASE_URL: mysql://root:root@db:3306/jurishand
+      PORT: 3000
     tty: true
     restart: on-failure
     ports:
