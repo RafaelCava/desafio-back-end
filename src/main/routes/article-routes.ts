@@ -1,9 +1,7 @@
 import { Router } from 'express'
 import { adaptRoute } from '../adapters/express-route-adapter'
+import { makeLoadArticlesController } from '../factories/controllers'
 
 export default (router: Router): void => {
-  router.post('/', (req, res) => {
-    console.log('entrou')
-    return res.status(200).send('ok')
-  })
+  router.get('/articles', adaptRoute(makeLoadArticlesController()))
 }
