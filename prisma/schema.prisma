@@ -15,6 +15,6 @@ model Article {
   title     String
   author    String
   content   String
-  date      DateTime @default(now())
+  date      String
   category  String
 }

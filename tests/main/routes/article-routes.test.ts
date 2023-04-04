@@ -36,10 +36,7 @@ describe('Article Routes', () => {
         .get('/api/articles')
         .expect(200)
         .then(res => {
-          expect(res.body[0].id).toBe(article.id)
-          expect(res.body[0].date).toBe(article.date.toISOString())
-          expect(res.body[0].title).toBe(article.title)
-          expect(res.body[0].content).toBe(article.content)
+          expect(res.body).toEqual([article])
         })
     })
 

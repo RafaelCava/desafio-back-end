@@ -4,7 +4,7 @@ export const mockArticle = (): Article => ({
   author: 'any_author',
   category: 'any_category',
   content: 'any_content',
-  date: new Date(),
+  date: new Date().toISOString(),
   title: 'any_title',
 })
 
@@ -14,7 +14,7 @@ export const mockArticles = (): Article[] => [
     title: 'any_title',
     author: 'any_author',
     content: 'any_value',
-    date: new Date(),
+    date: new Date().toISOString(),
     category: 'any_category',
   },
   {
@@ -22,7 +22,7 @@ export const mockArticles = (): Article[] => [
     title: 'any_title_2',
     author: 'any_author_2',
     content: 'any_value_2',
-    date: new Date(),
+    date: new Date().toISOString(),
     category: 'any_category_2',
   },
 ]
