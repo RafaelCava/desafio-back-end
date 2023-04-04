@@ -27,7 +27,7 @@ describe('Article Routes', () => {
     Mockdate.reset()
   })
   describe('GET /articles', () => {
-    it('Should return 200 on load articles', async () => {
+    it('Should return 200 with an array with articles', async () => {
       const article = mockArticle()
       await prisma.article.create({
         data: article,
@@ -40,6 +40,16 @@ describe('Article Routes', () => {
           expect(res.body[0].date).toBe(article.date.toISOString())
           expect(res.body[0].title).toBe(article.title)
           expect(res.body[0].content).toBe(article.content)
+        })
+    })
+
+    it("Should return 200 with a empty array if doesn't exists articles", async () => {
+      await request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(Array.isArray(res.body)).toBe(true)
+          expect(res.body.length).toBe(0)
         })
     })
   })
