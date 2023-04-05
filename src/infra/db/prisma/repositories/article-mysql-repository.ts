@@ -13,9 +13,6 @@ export class ArticleMysqlRepository
         date: 'desc',
       },
     })
-    if (!articles) {
-      return []
-    }
     return articles as LoadArticlesRepository.Result
   }
 
@@ -30,9 +27,6 @@ export class ArticleMysqlRepository
         date: 'desc',
       },
     })
-    if (!articles) {
-      return []
-    }
     return articles as unknown as LoadArticlesByCategoryRepository.Result
   }
 }
