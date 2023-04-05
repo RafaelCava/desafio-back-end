@@ -21,6 +21,11 @@ describe('ArticleMysqlRepository', () => {
     Mockdate.reset()
   })
 
+  it('Should be defined', () => {
+    const sut = makeSut()
+    expect(sut).toBeTruthy()
+  })
+
   describe('load()', () => {
     it('Should return a empty array if no articles are found', async () => {
       const sut = makeSut()
