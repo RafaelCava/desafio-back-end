@@ -1,5 +1,5 @@
 import { ArticleMysqlRepository } from '@/infra/db/prisma/repositories/article-mysql-repository'
-import { mockArticle } from '@/tests/domain/mocks'
+import { mockArticle, mockArticles } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 import prisma from '@/infra/db/prisma/client'
 const makeSut = (): ArticleMysqlRepository => {
@@ -40,6 +40,15 @@ describe('ArticleMysqlRepository', () => {
       const sut = makeSut()
       const articles = await sut.load()
       expect(articles).toEqual([mockArticle()])
+    })
+
+    it('Should return an array with articles order by date', async () => {
+      await prisma.article.createMany({
+        data: mockArticles(),
+      })
+      const sut = makeSut()
+      const articles = await sut.load()
+      expect(articles).toEqual([mockArticles()[0], mockArticles()[1]])
     })
   })
 })

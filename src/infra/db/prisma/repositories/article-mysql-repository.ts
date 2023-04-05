@@ -3,7 +3,11 @@ import prisma from '@/infra/db/prisma/client'
 
 export class ArticleMysqlRepository implements LoadArticlesRepository {
   async load(): Promise<LoadArticlesRepository.Result> {
-    let articles = await prisma.article.findMany()
+    let articles = await prisma.article.findMany({
+      orderBy: {
+        date: 'desc',
+      },
+    })
     if (!articles) {
       return []
     }
