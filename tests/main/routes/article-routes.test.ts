@@ -77,4 +77,16 @@ describe('Article Routes', () => {
         })
     })
   })
+
+  describe('GET /articles/search/:term', () => {
+    it('Should return 200 with a empty array if no articles are found', async () => {
+      await request(app)
+        .get('/api/articles/search/any_term')
+        .expect(200)
+        .then(res => {
+          expect(Array.isArray(res.body)).toBe(true)
+          expect(res.body.length).toBe(0)
+        })
+    })
+  })
 })
