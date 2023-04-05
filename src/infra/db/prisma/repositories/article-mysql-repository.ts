@@ -11,6 +11,6 @@ export class ArticleMysqlRepository implements LoadArticlesRepository {
     if (!articles) {
       return []
     }
-    return articles
+    return articles as LoadArticlesRepository.Result
   }
 }
