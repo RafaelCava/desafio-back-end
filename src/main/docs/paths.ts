@@ -1,5 +1,6 @@
-import { loadArticlesPath } from './paths/'
+import { loadArticlesPath, loadArticlesByCategoryPath } from './paths/'
 
 export default {
   '/articles': loadArticlesPath,
+  '/articles/{category}': loadArticlesByCategoryPath,
 }
