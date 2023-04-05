@@ -1,5 +1,10 @@
 import { ArticleMysqlRepository } from '@/infra/db/prisma/repositories/article-mysql-repository'
-import { mockArticle, mockArticles } from '@/tests/domain/mocks'
+import {
+  mockArticle,
+  mockArticles,
+  mockArticlesWithSameCategory,
+  throwError,
+} from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 import prisma from '@/infra/db/prisma/client'
 const makeSut = (): ArticleMysqlRepository => {
@@ -35,7 +40,7 @@ describe('ArticleMysqlRepository', () => {
 
     it('Should return an array with articles', async () => {
       await prisma.article.create({
-        data: mockArticle(),
+        data: mockArticle() as any,
       })
       const sut = makeSut()
       const articles = await sut.load()
@@ -44,11 +49,42 @@ describe('ArticleMysqlRepository', () => {
 
     it('Should return an array with articles order by date', async () => {
       await prisma.article.createMany({
-        data: mockArticles(),
+        data: mockArticles() as any,
       })
       const sut = makeSut()
       const articles = await sut.load()
       expect(articles).toEqual([mockArticles()[0], mockArticles()[1]])
+    })
+
+    it('Should throws if prisma throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
+      const promise = sut.load()
+      await expect(promise).rejects.toThrow()
+    })
+  })
+
+  describe('loadByCategory', () => {
+    it('Should return a empty array if no articles are found', async () => {
+      const sut = makeSut()
+      const articles = await sut.loadByCategory('any_category')
+      expect(articles).toEqual([])
+    })
+
+    it('Should return Articles if they exists', async () => {
+      const sut = makeSut()
+      await prisma.article.createMany({
+        data: mockArticlesWithSameCategory() as any,
+      })
+      const articles = await sut.loadByCategory('any_category')
+      expect(articles).toEqual(mockArticlesWithSameCategory())
+    })
+
+    it('Should throws if prisma throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
+      const promise = sut.loadByCategory('any_category')
+      await expect(promise).rejects.toThrow()
     })
   })
 })

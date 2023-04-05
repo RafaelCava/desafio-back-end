@@ -1,6 +1,6 @@
 import { type LoadArticlesRepository } from '@/data/protocols'
 import { DbLoadArticles } from '@/data/usecases'
-import { LoadArticlesRepositorySpy } from '@/tests/data/mocks/load-articles-repository'
+import { LoadArticlesRepositorySpy } from '@/tests/data/mocks/articles-repository'
 import { mockArticles, throwError } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 
