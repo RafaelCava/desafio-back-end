@@ -1,12 +1,10 @@
 <div align="center" id="top"> 
-  <img src="https://jurishand.com/_next/static/media/logo-jurishand-black.7fffda40.svg" alt="Jurishand" />
-
   &#xa0;
 
   <!-- <a href="https://jurishand.netlify.com">Demo</a> -->
 </div>
 
-<h1 align="center">Jurishand</h1>
+<h1 align="center">Desafio back-end</h1>
 
 <p align="center">
   <img alt="Principal linguagem do projeto" src="https://img.shields.io/github/languages/top/RafaelCava/desafio-back-end?color=56BEB8">
