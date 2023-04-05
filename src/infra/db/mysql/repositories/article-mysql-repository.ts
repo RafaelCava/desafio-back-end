@@ -35,6 +35,24 @@ export class ArticleMysqlRepository
   }
 
   async loadByTerm(term: string): Promise<LoadArticlesByTermRepository.Result> {
-    return await Promise.resolve([])
+    return await prisma.article.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: term,
+            },
+          },
+          {
+            content: {
+              contains: term,
+            },
+          },
+        ],
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    })
   }
 }

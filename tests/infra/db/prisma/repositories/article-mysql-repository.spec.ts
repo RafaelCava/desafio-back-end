@@ -94,5 +94,12 @@ describe('ArticleMysqlRepository', () => {
       const articles = await sut.loadByTerm('any_term')
       expect(articles).toEqual([])
     })
+
+    it('Should throws if prisma throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
+      const promise = sut.loadByTerm('any value')
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
