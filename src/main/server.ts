@@ -1,6 +1,6 @@
 import 'module-alias/register'
 import env from './config/env'
-import prisma from '@/infra/db/prisma/client'
+import prisma from '@/infra/db/mysql/client'
 
 prisma.$connect().then(async () => {
   const { setupApp } = await import('./config/app')

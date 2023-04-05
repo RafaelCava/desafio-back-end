@@ -1,11 +1,15 @@
 import {
   LoadArticlesByCategoryRepository,
+  LoadArticlesByTermRepository,
   LoadArticlesRepository,
 } from '@/data/protocols'
-import prisma from '@/infra/db/prisma/client'
+import prisma from '@/infra/db/mysql/client'
 
 export class ArticleMysqlRepository
-  implements LoadArticlesRepository, LoadArticlesByCategoryRepository
+  implements
+    LoadArticlesRepository,
+    LoadArticlesByCategoryRepository,
+    LoadArticlesByTermRepository
 {
   async load(): Promise<LoadArticlesRepository.Result> {
     let articles = await prisma.article.findMany({
@@ -28,5 +32,27 @@ export class ArticleMysqlRepository
       },
     })
     return articles as unknown as LoadArticlesByCategoryRepository.Result
+  }
+
+  async loadByTerm(term: string): Promise<LoadArticlesByTermRepository.Result> {
+    return await prisma.article.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: term,
+            },
+          },
+          {
+            content: {
+              contains: term,
+            },
+          },
+        ],
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    })
   }
 }

@@ -13,6 +13,12 @@ services:
     volumes:
       - .:/usr/jurishand/app
     entrypoint: sh ./.docker/entrypoint.sh
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3000/api/articles"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
     environment:
       NODE_ENV: development
       DATABASE_URL: mysql://root:root@db:3306/jurishand
@@ -38,6 +44,8 @@ services:
       MYSQL_DATABASE: jurishand
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
+    volumes:
+      - ./data:/var/lib/mysql
     ports:
       - 3306:3306
     networks:
