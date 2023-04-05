@@ -1,6 +1,8 @@
 import { LoadArticlesByCategory } from '@/domain/usecases'
 import { LoadArticlesByCategoryController } from '@/presentation/controllers'
 import { LoadArticlesByCategorySpy } from '../mocks/load-articles'
+import { throwError } from '@/tests/domain/mocks'
+import { serverError } from '@/presentation/helpers/http-helper'
 
 type SutTypes = {
   sut: LoadArticlesByCategoryController
@@ -30,5 +32,14 @@ describe('LoadArticlesByCategory Controller', () => {
     await sut.handle(mockRequest())
     expect(loadByCategorySpy).toHaveBeenCalledWith(mockRequest().category)
     expect(loadByCategorySpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should returns ServerError if LoadArticlesByCategory throws', async () => {
+    const { sut, loadArticlesByCategorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByCategorySpy, 'loadByCategory')
+      .mockImplementationOnce(throwError)
+    const articles = await sut.handle(mockRequest())
+    expect(articles).toEqual(serverError(new Error().stack as string))
   })
 })

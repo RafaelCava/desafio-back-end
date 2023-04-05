@@ -1,5 +1,6 @@
 import { LoadArticlesByCategory } from '@/domain/usecases'
-import { Controller, HttpResponse } from '../protocols'
+import { Controller, HttpResponse } from '@/presentation/protocols'
+import { serverError } from '@/presentation/helpers/http-helper'
 
 export class LoadArticlesByCategoryController implements Controller {
   constructor(
@@ -8,8 +9,12 @@ export class LoadArticlesByCategoryController implements Controller {
   async handle(
     request: LoadArticlesByCategoryController.Request
   ): Promise<LoadArticlesByCategoryController.Result> {
-    await this.loadArticlesByCategory.loadByCategory(request.category)
-    return null as any
+    try {
+      await this.loadArticlesByCategory.loadByCategory(request.category)
+      return null as any
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
