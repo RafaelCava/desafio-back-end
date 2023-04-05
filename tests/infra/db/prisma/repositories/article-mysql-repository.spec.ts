@@ -35,7 +35,7 @@ describe('ArticleMysqlRepository', () => {
 
     it('Should return an array with articles', async () => {
       await prisma.article.create({
-        data: mockArticle(),
+        data: mockArticle() as any,
       })
       const sut = makeSut()
       const articles = await sut.load()
@@ -44,11 +44,19 @@ describe('ArticleMysqlRepository', () => {
 
     it('Should return an array with articles order by date', async () => {
       await prisma.article.createMany({
-        data: mockArticles(),
+        data: mockArticles() as any,
       })
       const sut = makeSut()
       const articles = await sut.load()
       expect(articles).toEqual([mockArticles()[0], mockArticles()[1]])
+    })
+  })
+
+  describe('loadByCategory', () => {
+    it('Should return a empty array if no articles are found', async () => {
+      const sut = makeSut()
+      const articles = await sut.loadByCategory('any_category')
+      expect(articles).toEqual([])
     })
   })
 })

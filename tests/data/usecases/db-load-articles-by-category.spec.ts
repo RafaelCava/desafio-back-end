@@ -2,6 +2,7 @@ import { DbLoadArticlesByCategory } from '@/data/usecases'
 import { LoadArticlesByCategoryRepository } from '@/data/protocols'
 import { LoadArticlesByCategoryRepositorySpy } from '../mocks/articles-repository'
 import { mockArticlesWithSameCategory, throwError } from '@/tests/domain/mocks'
+import Mockdate from 'mockdate'
 
 type SutTypes = {
   sut: DbLoadArticlesByCategory
@@ -19,6 +20,13 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadArticlesByCategory', () => {
+  beforeEach(() => {
+    Mockdate.set(new Date())
+  })
+
+  afterEach(() => {
+    Mockdate.reset()
+  })
   it('should call LoadArticlesByCategoryRepository with correct value', async () => {
     const { sut, loadArticlesByCategoryRepositorySpy } = makeSut()
     const loadByCategorySpy = jest.spyOn(
