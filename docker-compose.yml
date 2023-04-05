@@ -27,6 +27,7 @@ services:
     restart: on-failure
     ports:
       - 3000:3000
+      - 9222:9222
       - 5555:5555
     networks:
       - kong-fc

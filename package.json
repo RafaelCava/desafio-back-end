@@ -1,6 +1,6 @@
 {
   "name": "jurishand",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "desafio back-end",
   "main": "dist/main/server.js",
   "author": "Rafael Cavalcante",
@@ -12,6 +12,7 @@
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/supertest": "^2.0.12",
+    "@types/swagger-ui-express": "^4.1.3",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -30,7 +31,6 @@
     "mockdate": "^3.0.5",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
-    "prisma": "^4.12.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -61,9 +61,8 @@
     "node": ">= 16.x"
   },
   "dependencies": {
+    "prisma": "^4.12.0",
     "@prisma/client": "4.12.0",
-    "@types/swagger-ui-express": "^4.1.3",
-    "D": "^1.0.0",
     "express": "^4.18.2",
     "module-alias": "^2.2.2",
     "swagger-ui-express": "^4.6.2"
