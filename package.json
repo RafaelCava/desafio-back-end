@@ -1,6 +1,6 @@
 {
   "name": "jurishand",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "desafio back-end",
   "main": "dist/main/server.js",
   "author": "Rafael Cavalcante",
@@ -62,8 +62,11 @@
   },
   "dependencies": {
     "@prisma/client": "4.12.0",
+    "@types/swagger-ui-express": "^4.1.3",
+    "D": "^1.0.0",
     "express": "^4.18.2",
-    "module-alias": "^2.2.2"
+    "module-alias": "^2.2.2",
+    "swagger-ui-express": "^4.6.2"
   },
   "_moduleAliases": {
     "@": "dist"
