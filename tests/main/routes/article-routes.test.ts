@@ -77,4 +77,30 @@ describe('Article Routes', () => {
         })
     })
   })
+
+  describe('GET /articles/search/:term', () => {
+    it('Should return 200 with a empty array if no articles are found', async () => {
+      await request(app)
+        .get('/api/articles/search/any_term')
+        .expect(200)
+        .then(res => {
+          expect(Array.isArray(res.body)).toBe(true)
+          expect(res.body.length).toBe(0)
+        })
+    })
+
+    it('Should return 200 with an array with articles', async () => {
+      const article: any = mockArticle()
+      await prisma.article.create({
+        data: article,
+      })
+      article.date = article.date.toISOString()
+      await request(app)
+        .get(`/api/articles/search/${article.title}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).toEqual([article])
+        })
+    })
+  })
 })
