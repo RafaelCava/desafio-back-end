@@ -3,6 +3,7 @@ import { ok, serverError } from '@/presentation/helpers/http-helper'
 import { LoadArticlesByTermController } from '@/presentation/controllers'
 import { LoadArticlesByTermSpy } from '../mocks/load-articles'
 import { mockArticlesWithSameTerm, throwError } from '@/tests/domain/mocks'
+import Mockdate from 'mockdate'
 
 type SutTypes = {
   sut: LoadArticlesByTermController
@@ -23,6 +24,14 @@ const mockRequest = (): LoadArticlesByTermController.Request => ({
 })
 
 describe('LoadArticlesByTerm Controller', () => {
+  beforeEach(() => {
+    Mockdate.set(new Date())
+  })
+
+  afterEach(() => {
+    Mockdate.reset()
+  })
+
   it('should call LoadArticlesByTerm with correct value', async () => {
     const { sut, loadArticlesByTermSpy } = makeSut()
     const loadByTermSpy = jest.spyOn(loadArticlesByTermSpy, 'loadByTerm')
