@@ -80,7 +80,7 @@ The following tools were used in the construction of the project:
 Before you start: checkered_flag:, you need to have [git](https://git-scm.com) and [docker](https://www.docker.com/) installed on your machine.
 
 ## :checkered_flag: Starting ##
-
+## Please use Docker in everything
 ```bash
 # Clone this repository
 $ git clone https://github.com/RafaelCava/desafio-back-end jurishand
@@ -104,6 +104,16 @@ $ docker compose up -d
 # With application running and the bank are up
 # Run this command
 $ docker compose exec -it jurishand yarn test:cov
+```
+
+## :checkered_flag: Script Python ##
+```bash
+# With application running and the bank are up
+# Run this commands
+$ docker build -t script-python -f ./.docker/dockerfiles/Dockerfile.python .
+$ docker run --network kong-fc -v ./scripts:/usr/src/app script-python
+# These commands will build a docker image with python and the script
+# And starts a container with the script and generate a csv file on ./script
 ```
 
 <!-- ## :memo: License ## -->
