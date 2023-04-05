@@ -1,8 +1,8 @@
 export type Article = {
-  id: string
+  id: number
   title: string
   author: string
   content: string
-  date: Date
+  date: string
   category: string
 }
