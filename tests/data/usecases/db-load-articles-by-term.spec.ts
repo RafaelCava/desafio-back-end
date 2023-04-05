@@ -1,6 +1,7 @@
 import { DbLoadArticlesByTerm } from '@/data/usecases'
 import { LoadArticlesByTermRepository } from '@/data/protocols'
 import { LoadArticlesByTermRepositorySpy } from '../mocks/articles-repository'
+import { throwError } from '@/tests/domain/mocks'
 
 type SutTypes = {
   sut: DbLoadArticlesByTerm
@@ -26,5 +27,14 @@ describe('DbLoadArticlesByTerm', () => {
     await sut.loadByTerm('any value')
     expect(loadByTermSpy).toHaveBeenCalledWith('any value')
     expect(loadByTermSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throws if loadArticlesByTermRepository throws', async () => {
+    const { sut, loadArticlesByTermRepositorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByTermRepositorySpy, 'loadByTerm')
+      .mockImplementationOnce(throwError)
+    const promise = sut.loadByTerm('any value')
+    await expect(promise).rejects.toThrow()
   })
 })
