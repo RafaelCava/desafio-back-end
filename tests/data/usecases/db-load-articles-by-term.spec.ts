@@ -37,4 +37,13 @@ describe('DbLoadArticlesByTerm', () => {
     const promise = sut.loadByTerm('any value')
     await expect(promise).rejects.toThrow()
   })
+
+  it('should return a empty array if loadArticlesByTermRepository returns a empty array', async () => {
+    const { sut, loadArticlesByTermRepositorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByTermRepositorySpy, 'loadByTerm')
+      .mockReturnValueOnce(Promise.resolve([]))
+    const articles = await sut.loadByTerm('any value')
+    expect(articles).toEqual([])
+  })
 })
