@@ -1,4 +1,4 @@
-import { ArticleMysqlRepository } from '@/infra/db/prisma/repositories/article-mysql-repository'
+import { ArticleMysqlRepository } from '@/infra/db/mysql/repositories/article-mysql-repository'
 import {
   mockArticle,
   mockArticles,
@@ -6,7 +6,7 @@ import {
   throwError,
 } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
-import prisma from '@/infra/db/prisma/client'
+import prisma from '@/infra/db/mysql/client'
 const makeSut = (): ArticleMysqlRepository => {
   return new ArticleMysqlRepository()
 }

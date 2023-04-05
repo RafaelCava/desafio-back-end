@@ -2,7 +2,7 @@ import {
   LoadArticlesByCategoryRepository,
   LoadArticlesRepository,
 } from '@/data/protocols'
-import prisma from '@/infra/db/prisma/client'
+import prisma from '@/infra/db/mysql/client'
 
 export class ArticleMysqlRepository
   implements LoadArticlesRepository, LoadArticlesByCategoryRepository

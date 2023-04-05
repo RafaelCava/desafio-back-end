@@ -1,5 +1,5 @@
 import { Express } from 'express'
-import prisma from '@/infra/db/prisma/client'
+import prisma from '@/infra/db/mysql/client'
 import { mockArticle } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 import request from 'supertest'
