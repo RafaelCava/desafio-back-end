@@ -1,8 +1,8 @@
 import { LoadArticlesByTerm } from '@/domain/usecases'
-import { serverError } from '@/presentation/helpers/http-helper'
+import { ok, serverError } from '@/presentation/helpers/http-helper'
 import { LoadArticlesByTermController } from '@/presentation/controllers'
 import { LoadArticlesByTermSpy } from '../mocks/load-articles'
-import { throwError } from '@/tests/domain/mocks'
+import { mockArticlesWithSameTerm, throwError } from '@/tests/domain/mocks'
 
 type SutTypes = {
   sut: LoadArticlesByTermController
@@ -38,5 +38,11 @@ describe('LoadArticlesByTerm Controller', () => {
       .mockImplementationOnce(throwError)
     const articles = await sut.handle(mockRequest())
     expect(articles).toEqual(serverError(new Error().stack as string))
+  })
+
+  it('should return Articles with same term on succeeds', async () => {
+    const { sut } = makeSut()
+    const articles = await sut.handle(mockRequest())
+    expect(articles).toEqual(ok(mockArticlesWithSameTerm()))
   })
 })
