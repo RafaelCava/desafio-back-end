@@ -1,6 +1,7 @@
 import { DbLoadArticlesByCategory } from '@/data/usecases'
 import { LoadArticlesByCategoryRepository } from '@/data/protocols'
 import { LoadArticlesByCategoryRepositorySpy } from '../mocks/load-articles-repository'
+import { throwError } from '@/tests/domain/mocks'
 
 type SutTypes = {
   sut: DbLoadArticlesByCategory
@@ -26,5 +27,14 @@ describe('DbLoadArticlesByCategory', () => {
     )
     await sut.loadByCategory('any_category')
     expect(loadByCategorySpy).toHaveBeenCalledWith('any_category')
+  })
+
+  it('should throws if LoadArticlesByCategoryRepository throws', async () => {
+    const { sut, loadArticlesByCategoryRepositorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByCategoryRepositorySpy, 'loadByCategory')
+      .mockImplementationOnce(throwError)
+    const promise = sut.loadByCategory('any_category')
+    await expect(promise).rejects.toThrow()
   })
 })
