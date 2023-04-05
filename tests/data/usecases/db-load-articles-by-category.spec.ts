@@ -1,7 +1,7 @@
 import { DbLoadArticlesByCategory } from '@/data/usecases'
 import { LoadArticlesByCategoryRepository } from '@/data/protocols'
-import { LoadArticlesByCategoryRepositorySpy } from '../mocks/load-articles-repository'
-import { throwError } from '@/tests/domain/mocks'
+import { LoadArticlesByCategoryRepositorySpy } from '../mocks/articles-repository'
+import { mockArticlesWithSameCategory, throwError } from '@/tests/domain/mocks'
 
 type SutTypes = {
   sut: DbLoadArticlesByCategory
@@ -38,12 +38,18 @@ describe('DbLoadArticlesByCategory', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('should a empty array if LoadArticlesByCategoryRepository returns a empty array', async () => {
+  it('should return a empty array if LoadArticlesByCategoryRepository returns a empty array', async () => {
     const { sut, loadArticlesByCategoryRepositorySpy } = makeSut()
     jest
       .spyOn(loadArticlesByCategoryRepositorySpy, 'loadByCategory')
       .mockReturnValueOnce(Promise.resolve([]))
     const articles = await sut.loadByCategory('any_category')
     expect(articles).toEqual([])
+  })
+
+  it('should return an array with Articles on succeed', async () => {
+    const { sut } = makeSut()
+    const articles = await sut.loadByCategory('any_category')
+    expect(articles).toEqual(mockArticlesWithSameCategory())
   })
 })
