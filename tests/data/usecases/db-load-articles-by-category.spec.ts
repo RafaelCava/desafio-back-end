@@ -37,4 +37,13 @@ describe('DbLoadArticlesByCategory', () => {
     const promise = sut.loadByCategory('any_category')
     await expect(promise).rejects.toThrow()
   })
+
+  it('should a empty array if LoadArticlesByCategoryRepository returns a empty array', async () => {
+    const { sut, loadArticlesByCategoryRepositorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByCategoryRepositorySpy, 'loadByCategory')
+      .mockReturnValueOnce(Promise.resolve([]))
+    const articles = await sut.loadByCategory('any_category')
+    expect(articles).toEqual([])
+  })
 })
