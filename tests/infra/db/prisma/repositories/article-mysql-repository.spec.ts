@@ -3,6 +3,7 @@ import {
   mockArticle,
   mockArticles,
   mockArticlesWithSameCategory,
+  mockArticlesWithSameTerm,
   throwError,
 } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
@@ -64,7 +65,7 @@ describe('ArticleMysqlRepository', () => {
     })
   })
 
-  describe('loadByCategory', () => {
+  describe('loadByCategory()', () => {
     it('Should return a empty array if no articles are found', async () => {
       const sut = makeSut()
       const articles = await sut.loadByCategory('any_category')
@@ -88,7 +89,7 @@ describe('ArticleMysqlRepository', () => {
     })
   })
 
-  describe('loadByTerm', () => {
+  describe('loadByTerm()', () => {
     it('Should return a empty array if no articles are found', async () => {
       const sut = makeSut()
       const articles = await sut.loadByTerm('any_term')
@@ -100,6 +101,19 @@ describe('ArticleMysqlRepository', () => {
       jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
       const promise = sut.loadByTerm('any value')
       await expect(promise).rejects.toThrow()
+    })
+
+    it('Should return just only articles with same term provided', async () => {
+      const sut = makeSut()
+      await prisma.article.createMany({
+        data: mockArticlesWithSameTerm() as any,
+      })
+      await prisma.article.create({
+        data: Object.assign({}, mockArticle(), { id: 3 }) as any,
+      })
+      const articles = await sut.loadByTerm('any value')
+      expect(articles).toEqual(mockArticlesWithSameTerm())
+      expect(articles.length).toBe(2)
     })
   })
 })
