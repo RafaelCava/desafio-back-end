@@ -6,7 +6,7 @@ export default {
   info: {
     title: 'Back End challenge',
     description: 'API developed for Back End challenge.',
-    version: '2.0.0',
+    version: '2.0.1',
     contact: {
       name: 'Rafael Cavalcante',
       email: 'ra.facavalcante@hotmail.com',
