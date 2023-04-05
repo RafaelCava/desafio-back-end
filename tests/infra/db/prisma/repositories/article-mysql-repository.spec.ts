@@ -3,6 +3,7 @@ import {
   mockArticle,
   mockArticles,
   mockArticlesWithSameCategory,
+  throwError,
 } from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 import prisma from '@/infra/db/prisma/client'
@@ -54,6 +55,13 @@ describe('ArticleMysqlRepository', () => {
       const articles = await sut.load()
       expect(articles).toEqual([mockArticles()[0], mockArticles()[1]])
     })
+
+    it('Should throws if prisma throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
+      const promise = sut.load()
+      await expect(promise).rejects.toThrow()
+    })
   })
 
   describe('loadByCategory', () => {
@@ -70,6 +78,13 @@ describe('ArticleMysqlRepository', () => {
       })
       const articles = await sut.loadByCategory('any_category')
       expect(articles).toEqual(mockArticlesWithSameCategory())
+    })
+
+    it('Should throws if prisma throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(prisma.article, 'findMany').mockImplementationOnce(throwError)
+      const promise = sut.loadByCategory('any_category')
+      await expect(promise).rejects.toThrow()
     })
   })
 })
