@@ -2,7 +2,7 @@ import { LoadArticlesByCategory } from '@/domain/usecases'
 import { LoadArticlesByCategoryController } from '@/presentation/controllers'
 import { LoadArticlesByCategorySpy } from '../mocks/load-articles'
 import { throwError } from '@/tests/domain/mocks'
-import { serverError } from '@/presentation/helpers/http-helper'
+import { ok, serverError } from '@/presentation/helpers/http-helper'
 
 type SutTypes = {
   sut: LoadArticlesByCategoryController
@@ -41,5 +41,14 @@ describe('LoadArticlesByCategory Controller', () => {
       .mockImplementationOnce(throwError)
     const articles = await sut.handle(mockRequest())
     expect(articles).toEqual(serverError(new Error().stack as string))
+  })
+
+  it('should returns 200 with a empty array if no Articles are found', async () => {
+    const { sut, loadArticlesByCategorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByCategorySpy, 'loadByCategory')
+      .mockReturnValueOnce(Promise.resolve([]))
+    const articles = await sut.handle(mockRequest())
+    expect(articles).toEqual(ok([]))
   })
 })
