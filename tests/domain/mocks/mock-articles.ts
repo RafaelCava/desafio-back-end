@@ -45,3 +45,22 @@ export const mockArticlesWithSameCategory = (): Article[] => [
     category: 'any_category',
   },
 ]
+
+export const mockArticlesWithSameTerm = (): Article[] => [
+  {
+    id: 1,
+    title: 'any value',
+    author: 'any_author',
+    content: 'any_value',
+    date: new Date(),
+    category: 'any_category',
+  },
+  {
+    id: 2,
+    title: 'any_value_2',
+    author: 'any_author_2',
+    content: 'any value',
+    date: new Date('2021-01-01'),
+    category: 'any_category_2',
+  },
+]

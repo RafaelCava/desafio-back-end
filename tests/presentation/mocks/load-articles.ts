@@ -1,7 +1,12 @@
-import { LoadArticles, LoadArticlesByCategory } from '@/domain/usecases'
+import {
+  LoadArticles,
+  LoadArticlesByCategory,
+  LoadArticlesByTerm,
+} from '@/domain/usecases'
 import {
   mockArticles,
   mockArticlesWithSameCategory,
+  mockArticlesWithSameTerm,
 } from '@/tests/domain/mocks/mock-articles'
 
 export class LoadArticlesSpy implements LoadArticles {
@@ -15,5 +20,11 @@ export class LoadArticlesByCategorySpy implements LoadArticlesByCategory {
     category: string
   ): Promise<LoadArticlesByCategory.Result> {
     return await Promise.resolve(mockArticlesWithSameCategory())
+  }
+}
+
+export class LoadArticlesByTermSpy implements LoadArticlesByTerm {
+  async loadByTerm(term: string): Promise<LoadArticlesByTerm.Result> {
+    return await Promise.resolve(mockArticlesWithSameTerm())
   }
 }
