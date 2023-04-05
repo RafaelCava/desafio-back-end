@@ -1,5 +1,9 @@
 import { ArticleMysqlRepository } from '@/infra/db/prisma/repositories/article-mysql-repository'
-import { mockArticle, mockArticles } from '@/tests/domain/mocks'
+import {
+  mockArticle,
+  mockArticles,
+  mockArticlesWithSameCategory,
+} from '@/tests/domain/mocks'
 import Mockdate from 'mockdate'
 import prisma from '@/infra/db/prisma/client'
 const makeSut = (): ArticleMysqlRepository => {
@@ -57,6 +61,15 @@ describe('ArticleMysqlRepository', () => {
       const sut = makeSut()
       const articles = await sut.loadByCategory('any_category')
       expect(articles).toEqual([])
+    })
+
+    it('Should return Articles if they exists', async () => {
+      const sut = makeSut()
+      await prisma.article.createMany({
+        data: mockArticlesWithSameCategory() as any,
+      })
+      const articles = await sut.loadByCategory('any_category')
+      expect(articles).toEqual(mockArticlesWithSameCategory())
     })
   })
 })
