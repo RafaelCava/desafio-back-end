@@ -76,7 +76,7 @@ The following tools were used in the construction of the project:
 
 ## :white_check_mark: Pre-requirements ##
 
-Before you start: checkered_flag:, you need to have [git](https://git-scm.com) and [docker](https://www.docker.com/) installed on your machine.
+Before you start :checkered_flag:, you need to have [git](https://git-scm.com) and [docker](https://www.docker.com/) installed on your machine.
 
 ## :checkered_flag: Starting ##
 ## Please use Docker in everything
