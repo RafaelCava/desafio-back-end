@@ -87,4 +87,12 @@ describe('ArticleMysqlRepository', () => {
       await expect(promise).rejects.toThrow()
     })
   })
+
+  describe('loadByTerm', () => {
+    it('Should return a empty array if no articles are found', async () => {
+      const sut = makeSut()
+      const articles = await sut.loadByTerm('any_term')
+      expect(articles).toEqual([])
+    })
+  })
 })
