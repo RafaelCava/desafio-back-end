@@ -1,7 +1,8 @@
 import { DbLoadArticlesByTerm } from '@/data/usecases'
 import { LoadArticlesByTermRepository } from '@/data/protocols'
 import { LoadArticlesByTermRepositorySpy } from '../mocks/articles-repository'
-import { throwError } from '@/tests/domain/mocks'
+import { mockArticlesWithSameTerm, throwError } from '@/tests/domain/mocks'
+import Mockdate from 'mockdate'
 
 type SutTypes = {
   sut: DbLoadArticlesByTerm
@@ -18,6 +19,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadArticlesByTerm', () => {
+  beforeEach(() => {
+    Mockdate.set(new Date())
+  })
+
+  afterEach(() => {
+    Mockdate.reset()
+  })
+
   it('should call loadArticlesByTermRepository with correct value', async () => {
     const { sut, loadArticlesByTermRepositorySpy } = makeSut()
     const loadByTermSpy = jest.spyOn(
@@ -45,5 +54,11 @@ describe('DbLoadArticlesByTerm', () => {
       .mockReturnValueOnce(Promise.resolve([]))
     const articles = await sut.loadByTerm('any value')
     expect(articles).toEqual([])
+  })
+
+  it('should return articles on succeeds', async () => {
+    const { sut } = makeSut()
+    const articles = await sut.loadByTerm('any value')
+    expect(articles).toEqual(mockArticlesWithSameTerm())
   })
 })
