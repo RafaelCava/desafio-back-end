@@ -1,6 +1,7 @@
 import { LoadArticlesByCategory } from '@/domain/usecases'
 import { Controller, HttpResponse } from '@/presentation/protocols'
-import { ok, serverError } from '@/presentation/helpers/http-helper'
+import { badRequest, ok, serverError } from '@/presentation/helpers/http-helper'
+import { MissingParamError } from '../errors'
 
 export class LoadArticlesByCategoryController implements Controller {
   constructor(
@@ -10,6 +11,9 @@ export class LoadArticlesByCategoryController implements Controller {
     request: LoadArticlesByCategoryController.Request
   ): Promise<LoadArticlesByCategoryController.Result> {
     try {
+      if (!request.category) {
+        return badRequest(new MissingParamError('category'))
+      }
       const articles = await this.loadArticlesByCategory.loadByCategory(
         request.category
       )

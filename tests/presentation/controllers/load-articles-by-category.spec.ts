@@ -2,7 +2,9 @@ import { LoadArticlesByCategory } from '@/domain/usecases'
 import { LoadArticlesByCategoryController } from '@/presentation/controllers'
 import { LoadArticlesByCategorySpy } from '../mocks/load-articles'
 import { mockArticlesWithSameCategory, throwError } from '@/tests/domain/mocks'
-import { ok, serverError } from '@/presentation/helpers/http-helper'
+import { badRequest, ok, serverError } from '@/presentation/helpers/http-helper'
+import { MissingParamError } from '@/presentation/errors'
+import Mockdate from 'mockdate'
 
 type SutTypes = {
   sut: LoadArticlesByCategoryController
@@ -23,6 +25,14 @@ const mockRequest = (): LoadArticlesByCategoryController.Request => ({
 })
 
 describe('LoadArticlesByCategory Controller', () => {
+  beforeEach(() => {
+    Mockdate.set(new Date())
+  })
+
+  afterEach(() => {
+    Mockdate.reset()
+  })
+
   it('should call LoadArticlesByCategory with correct values', async () => {
     const { sut, loadArticlesByCategorySpy } = makeSut()
     const loadByCategorySpy = jest.spyOn(
@@ -41,6 +51,15 @@ describe('LoadArticlesByCategory Controller', () => {
       .mockImplementationOnce(throwError)
     const articles = await sut.handle(mockRequest())
     expect(articles).toEqual(serverError(new Error().stack as string))
+  })
+
+  it('should returns badRequest if no category are provided', async () => {
+    const { sut, loadArticlesByCategorySpy } = makeSut()
+    jest
+      .spyOn(loadArticlesByCategorySpy, 'loadByCategory')
+      .mockImplementationOnce(throwError)
+    const articles = await sut.handle({} as any)
+    expect(articles).toEqual(badRequest(new MissingParamError('category')))
   })
 
   it('should returns 200 with a empty array if LoadArticlesByCategory returns a empty array', async () => {
