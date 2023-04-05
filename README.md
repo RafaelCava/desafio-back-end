@@ -74,6 +74,7 @@ The following tools were used in the construction of the project:
 - [Yarn](https://yarnpkg.com/)
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Python3](https://www.python.org/downloads/)
 
 ## :white_check_mark: Pre-requirements ##
 
