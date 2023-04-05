@@ -22,7 +22,7 @@ export const mockArticles = (): Article[] => [
     title: 'any_title_2',
     author: 'any_author_2',
     content: 'any_value_2',
-    date: new Date().toISOString(),
+    date: new Date('2021-01-01').toISOString(),
     category: 'any_category_2',
   },
 ]
