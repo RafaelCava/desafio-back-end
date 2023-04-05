@@ -1,6 +1,6 @@
 {
   "name": "jurishand",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "desafio back-end",
   "main": "dist/main/server.js",
   "author": "Rafael Cavalcante",
@@ -8,8 +8,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
+    "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -23,8 +25,13 @@
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
+    "jest-mock-extended": "2.0.4",
     "lint-staged": "^13.2.0",
+    "mockdate": "^3.0.5",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
+    "prisma": "^4.12.0",
+    "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsc": "^2.0.4",
@@ -34,11 +41,14 @@
     "test": "NODE_ENV=test jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:unit": "yarn test:verbose --watch -c jest-unit.config.ts",
-    "test:integration": "yarn test:verbose --watch -c jest-integration.config.js",
+    "test:integration": "yarn test:verbose --watch -c jest-integration.config.ts",
     "test:cov": "rimraf coverage && yarn test --coverage",
     "build:compile": "tsc -p tsconfig-build.json",
     "build": "rimraf dist && yarn build:compile",
-    "test:staged": "yarn test --findRelatedTests $(git status --short)"
+    "test:staged": "yarn test",
+    "env": "rm -rf .env && cp .env.example .env",
+    "start": "node dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js"
   },
   "config": {
     "commitizen": {
@@ -49,5 +59,13 @@
     "npm": "please-use-yarn",
     "yarn": ">= 1.19.1",
     "node": ">= 16.x"
+  },
+  "dependencies": {
+    "@prisma/client": "4.12.0",
+    "express": "^4.18.2",
+    "module-alias": "^2.2.2"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }
