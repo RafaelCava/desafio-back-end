@@ -12,3 +12,8 @@ export function ok<T>(body: T): HttpResponse<T> {
     statusCode: StatusCode.ok,
   }
 }
+
+export const badRequest = (error: Error): HttpResponse => ({
+  statusCode: 400,
+  body: error,
+})

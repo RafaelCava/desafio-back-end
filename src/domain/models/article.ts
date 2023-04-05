@@ -3,6 +3,6 @@ export type Article = {
   title: string
   author: string
   content: string
-  date: string
+  date: Date
   category: string
 }

@@ -28,10 +28,11 @@ describe('Article Routes', () => {
   })
   describe('GET /articles', () => {
     it('Should return 200 with an array with articles', async () => {
-      const article = mockArticle()
+      let article: any = mockArticle()
       await prisma.article.create({
         data: article,
       })
+      article.date = article.date.toISOString()
       await request(app)
         .get('/api/articles')
         .expect(200)
@@ -43,6 +44,32 @@ describe('Article Routes', () => {
     it("Should return 200 with a empty array if doesn't exists articles", async () => {
       await request(app)
         .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(Array.isArray(res.body)).toBe(true)
+          expect(res.body.length).toBe(0)
+        })
+    })
+  })
+
+  describe('GET /articles/:category', () => {
+    it('Should return 200 with an array with articles', async () => {
+      const article: any = mockArticle()
+      await prisma.article.create({
+        data: article as any,
+      })
+      article.date = article.date.toISOString()
+      await request(app)
+        .get(`/api/articles/${article.category}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body).toEqual([article])
+        })
+    })
+
+    it("Should return 200 with a empty array if doesn't exists articles", async () => {
+      await request(app)
+        .get('/api/articles/any_category')
         .expect(200)
         .then(res => {
           expect(Array.isArray(res.body)).toBe(true)
